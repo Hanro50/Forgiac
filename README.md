@@ -9,7 +9,7 @@
 2) A swing installer GUI 
 > Just something simple to show how far the installation has progressed. 
 3) manifest.json and version.json generator
-> Mostly there to make it easier to redistribute it with a launcher. 
+> Mostly there to make it easier to redistribute this library with a custom launcher that can decode version.jsons and version manifest files. 
 
 ## Compatibility: 
 1.12+ (Tested so far) 
