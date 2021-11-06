@@ -21,3 +21,13 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+/old
+
+/core/target
+/basic/target
+/gui/target
+
+/core/dependency-reduced-pom.xml
+/basic/dependency-reduced-pom.xml
+/gui/dependency-reduced-pom.xml

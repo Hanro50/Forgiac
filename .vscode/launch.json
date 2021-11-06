@@ -7,9 +7,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "App",
+            "name": "Basic",
             "request": "launch",
-            "mainClass": "za.net.hanro50.forgiac.App"
+            "mainClass": "za.net.hanro50.forgiac.basic",
+            "args": "--installer \"Hello world\""
         },
         {
             "type": "java",
