@@ -29,11 +29,11 @@
   <build>
     <resources>
       <resource>
-          <directory>.</directory>
+          <directory>../</directory>
           <filtering>false</filtering>
           <includes>
-              <include>pom.xml</include>
               <include>LICENSE</include>
+              <include>README.md</include>
           </includes>
           <targetPath>META-INF</targetPath>
       </resource>
