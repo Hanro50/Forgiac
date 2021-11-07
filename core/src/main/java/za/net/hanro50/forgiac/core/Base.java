@@ -65,6 +65,8 @@ public class Base {
         mc.setDialogTitle("Select forge Installation jar");
         mc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         mc.showOpenDialog(null);
+        System.out.println("[core]: installer: "+ mc.getSelectedFile().getAbsolutePath());
+
         jar = mc.getSelectedFile();
     }
 
@@ -87,7 +89,8 @@ public class Base {
         dotMC.setDialogTitle("Set location of .Minecraft folder location");
         dotMC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dotMC.showOpenDialog(null);
-        Base.dotMC = dotMC.getCurrentDirectory();
+        System.out.println("[core]: .minecraft: "+dotMC.getSelectedFile().getAbsolutePath());
+        Base.dotMC = dotMC.getSelectedFile();
     }
 
     public static File getDotMC() {

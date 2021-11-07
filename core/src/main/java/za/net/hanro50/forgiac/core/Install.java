@@ -1,21 +1,16 @@
 package za.net.hanro50.forgiac.core;
 
 import java.io.File;
-import java.io.OutputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.TypeVariable;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.function.Predicate;
 
-import javax.swing.JFileChooser;
-
-@SuppressWarnings("all")
-public class Install {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public abstract class Install {
     URLClassLoader child;
 
     public Class load(String name) throws ClassNotFoundException {
@@ -58,54 +53,49 @@ public class Install {
             Method method = clazz.getDeclaredMethod(name, clasify(Argz));
             return method.invoke(object, Argz);
         } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
             System.out.println("Cannot invoke default method of invocation. Going with plan B...huh...Plan F");
         }
         Method[] methodz = clazz.getMethods();
+        for (Method method : methodz) {
+            System.out.println(method.getName() + ":" + method.getParameterTypes().length);
+            if (method.getParameterTypes().length == Argz.length && method.getName() == name) {
+                return method.invoke(object, Argz);
+            }
+        }
 
         for (Method method : methodz) {
+            if (method.getName() == name) {
+                Object[] objs = new Object[method.getParameterTypes().length ];
+                for (int g66 = 0; g66<method.getParameterTypes().length;g66++) {
+                    objs[g66]=g66<Argz.length?Argz[g66]:null;
+                }
+                return method.invoke(object, objs);
+            }
+        }
+        for (Method method : methodz) {
+
             if (method.getParameterTypes().length == Argz.length) {
                 return method.invoke(object, Argz);
             }
         }
-        for (Method method : methodz) {
-            System.out.println(method.getName());
-            for (TypeVariable<Method> method2 : method.getTypeParameters()) {
-                System.out.print(method2.getName());
-            }
-            System.out.println();
-        }
+
         throw new NoSuchMethodException();
     }
 
-    /** Installer for 1.12+ installer */
-
-    private void installer(File jar, File MCpath, Object callback) throws Exception {
+    public Install(File jar, File dotMC) throws MalformedURLException {
+        System.out.println("[core]: Using jar: " + jar.getAbsolutePath());
+        System.out.println("[core]: Using .minecraft: " + dotMC.getAbsolutePath());
         child = new URLClassLoader(new URL[] { jar.toURI().toURL() }, this.getClass().getClassLoader());
-        Class Util = load("net.minecraftforge.installer.json.Util");
-        Object InstallProfile = invoke(Util, "loadInstallProfile");
-        System.out.println(InstallProfile);
-
-        JFileChooser filesjooser = new JFileChooser();
-        filesjooser.showOpenDialog(null);
-        Class ClientInstall = load("net.minecraftforge.installer.actions.ClientInstall");
-
-        Object obj = construct(ClientInstall, InstallProfile, callback);
-        File installer = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
-        Predicate<String> optionals = a -> true;
-        try {
-            invoke(obj, "run", MCpath, optionals, installer);
-        } catch (ReflectiveOperationException e) {
-            invoke(obj, "run", MCpath, optionals);
+        File launcherProfiles = new File(dotMC, "launcher_profiles.json");
+        if (!launcherProfiles.exists()) {
+            try {
+                launcherProfiles.createNewFile();
+                FileWriter myWriter = new FileWriter(launcherProfiles);
+                myWriter.write("{\"launcherVersion\" : {},\"profiles\" : {},\"settings\" : {}}");
+                myWriter.close();
+            } catch (IOException e) {
+            }
         }
-    }
-
-    public Install(File jar, File MCpath, Object callback) throws Exception {
-        installer(jar, MCpath, callback);
-    }
-
-    public Install(File jar, File MCpath) throws Exception {
-        Class ProgressCallback = load("net.minecraftforge.installer.actions.ProgressCallback");
-        Object withOutputs = ProgressCallback.getField("TO_STD_OUT").get(null);
-        installer(jar, MCpath, withOutputs);
     }
 }

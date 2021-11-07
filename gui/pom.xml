@@ -21,6 +21,12 @@
       <version>11</version>
     </dependency>
 
+      <dependency>
+        <artifactId>core</artifactId>
+        <groupId>za.net.hanro50.forgiac.core</groupId>
+        <version>${revision}</version>
+      </dependency>
+  
     <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
