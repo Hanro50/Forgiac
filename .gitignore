@@ -23,6 +23,7 @@
 hs_err_pid*
 
 /old
+/target
 
 /core/target
 /basic/target
