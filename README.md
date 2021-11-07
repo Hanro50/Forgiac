@@ -2,15 +2,10 @@
  A reflection based forge wrapper. 
 
 # WIP: Planned features
-
-## Short term goals
-1) Command line support. 
-> Mostly the ability to specify a .minecraft folder and the location of a forge installer jar
-2) manifest.json and version.json generator
-> Mostly there to make it easier to redistribute this library with a custom launcher that can decode version.jsons and version manifest files. 
+1) Virtual install environment support
 
 ## Compatibility: 
-1.8.9+ (Tested so far) 
+1.5.2-7.8.0.684+ (Tested so far) 
 
 ## Command Line arguments
 <table>

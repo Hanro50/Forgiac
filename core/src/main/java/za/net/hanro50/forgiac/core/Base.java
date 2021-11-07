@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
-
 import com.formdev.flatlaf.FlatDarkLaf;
 
 public class Base {
@@ -14,8 +13,16 @@ public class Base {
     private static File jar;
     private static File dotMC;
     public static Boolean noGui = false;
-    static {
+    private static File Manifest;
 
+    public static Boolean isLocked() {
+        return lock;
+    };
+
+    static {
+        ArgsParser.Register("mk_manifest", new ArgObj("Creates a manifest file in a given directory", 1, (argz) -> {
+            Manifest = new File(argz[0]);
+        }));
         ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", 1, (argz) -> {
             noGui = true;
         }));
@@ -108,6 +115,10 @@ public class Base {
         if (dotMC == null)
             setDotMC();
         return dotMC;
+    }
+
+    public static File getManifestFolder() {
+        return Manifest;
     }
 
 }

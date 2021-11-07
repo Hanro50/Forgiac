@@ -1,11 +1,13 @@
 package za.net.hanro50.forgiac.core.install;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
 import javax.swing.JFrame;
 
 import za.net.hanro50.forgiac.core.Base;
+import za.net.hanro50.forgiac.core.VManifest;
 
 @SuppressWarnings({ "rawtypes" })
 public class Installv2 extends Common {
@@ -57,5 +59,20 @@ public class Installv2 extends Common {
         installer(jar, MCpath, withOutputs);
         if (p != null)
             p.dispose();
+    }
+
+    @Override
+    public VManifest getManifest() {
+        Class Util;
+        try {
+            Util = load("net.minecraftforge.installer.json.Util");// getMinecraft
+            Object InstallProfile = invoke(Util, "loadInstallProfile");
+            return new VManifest((String) invoke(InstallProfile, "getVersion"),
+                    (String) invoke(InstallProfile, "getMinecraft"));
+        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

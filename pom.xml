@@ -11,13 +11,12 @@
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
     <timestamp>${maven.build.timestamp}</timestamp>
-   <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
   </properties>
   <packaging>pom</packaging>
   <modules>
     <module>core</module>
     <module>basic</module>
-    <module>gui</module>
   </modules>
   <dependencies>
     <dependency>
@@ -25,27 +24,34 @@
       <artifactId>flatlaf</artifactId>
       <version>1.6.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.9</version>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>
       <resource>
-          <directory>../</directory>
-          <filtering>false</filtering>
-          <includes>
-              <include>LICENSE</include>
-              <include>README.md</include>
-          </includes>
-          <targetPath>META-INF</targetPath>
+        <directory>../</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>LICENSE</include>
+          <include>README.md</include>
+        </includes>
+        <targetPath>META-INF</targetPath>
       </resource>
       <resource>
         <directory>../</directory>
         <filtering>true</filtering>
         <includes>
-            <include>build.txt</include>
+          <include>build.txt</include>
         </includes>
         <targetPath>META-INF</targetPath>
-    </resource>
-  </resources>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

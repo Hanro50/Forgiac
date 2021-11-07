@@ -32,3 +32,5 @@ hs_err_pid*
 /core/dependency-reduced-pom.xml
 /basic/dependency-reduced-pom.xml
 /gui/dependency-reduced-pom.xml
+
+/natives
