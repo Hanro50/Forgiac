@@ -1,8 +1,8 @@
 package za.net.hanro50.forgiac.basic;
 
 import za.net.hanro50.forgiac.core.Base;
-import za.net.hanro50.forgiac.core.Install1;
-import za.net.hanro50.forgiac.core.Install2;
+import za.net.hanro50.forgiac.core.install.Installv1;
+import za.net.hanro50.forgiac.core.install.Installv2;
 
 /**
  * Hello world!
@@ -12,10 +12,12 @@ public class App {
     public static void main(String[] args) throws Exception {
         Base.init(args);
         try {
-            new Install2(Base.getJar(), Base.getDotMC());
+            new Installv2(Base.getJar(), Base.getDotMC());
         } catch (Exception e) {
-            new Install1(Base.getJar(), Base.getDotMC());
+            e.printStackTrace();
+            new Installv1(Base.getJar(), Base.getDotMC());
         }
         System.out.println("Bye World!");
+        System.exit(0);
     }
 }

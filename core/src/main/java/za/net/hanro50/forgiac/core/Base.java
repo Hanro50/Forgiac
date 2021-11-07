@@ -13,8 +13,19 @@ public class Base {
     private static Boolean lock = false;
     private static File jar;
     private static File dotMC;
-
+    public static Boolean noGui = false;
     static {
+
+        ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", 1, (argz) -> {
+            noGui = true;
+        }));
+        ArgsParser.Register(".minecraft",
+                new ArgObj("The path towards the location of a .minecraft directory", 1, (argz) -> {
+                    dotMC = new File(argz[0]);
+                }));// lock = lst.indexOf("--lock") < 0;
+        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", 0, (argz) -> {
+            lock = true;
+        }));
         ArgsParser.Register("version", new ArgObj("Shows build information", 0, (argz) -> {
             try {
                 InputStream propIs = Base.class.getResourceAsStream("/META-INF/build.txt");
@@ -65,7 +76,7 @@ public class Base {
         mc.setDialogTitle("Select forge Installation jar");
         mc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         mc.showOpenDialog(null);
-        System.out.println("[core]: installer: "+ mc.getSelectedFile().getAbsolutePath());
+        System.out.println("[core]: installer: " + mc.getSelectedFile().getAbsolutePath());
 
         jar = mc.getSelectedFile();
     }
@@ -89,7 +100,7 @@ public class Base {
         dotMC.setDialogTitle("Set location of .Minecraft folder location");
         dotMC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dotMC.showOpenDialog(null);
-        System.out.println("[core]: .minecraft: "+dotMC.getSelectedFile().getAbsolutePath());
+        System.out.println("[core]: .minecraft: " + dotMC.getSelectedFile().getAbsolutePath());
         Base.dotMC = dotMC.getSelectedFile();
     }
 

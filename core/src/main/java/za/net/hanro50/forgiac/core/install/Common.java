@@ -1,8 +1,9 @@
-package za.net.hanro50.forgiac.core;
+package za.net.hanro50.forgiac.core.install;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -10,7 +11,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class Install {
+public abstract class Common {
     URLClassLoader child;
 
     public Class load(String name) throws ClassNotFoundException {
@@ -36,7 +37,33 @@ public abstract class Install {
     public Object construct(Class clazz, Object... Argz)
             throws NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        return clazz.getConstructor(clasify(Argz)).newInstance(Argz);
+
+        try {
+            Constructor constructor = clazz.getDeclaredConstructor(clasify(Argz));
+            return constructor.newInstance(Argz);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+            System.out.println("Cannot invoke default method of invocation. Going with plan B...huh...Plan F");
+        }
+        Constructor[] constructorz = clazz.getConstructors();
+        for (Constructor constructorv : constructorz) {
+            System.out.println(constructorv.getName() + ":" + constructorv.getParameterTypes().length);
+            if (constructorv.getParameterTypes().length == Argz.length) {
+                return constructorv.newInstance(Argz);
+            }
+        }
+
+        for (Constructor constructorv : constructorz) {
+
+            Object[] objs = new Object[constructorv.getParameterTypes().length];
+            for (int g66 = 0; g66 < constructorv.getParameterTypes().length; g66++) {
+                objs[g66] = g66 < Argz.length ? Argz[g66] : null;
+            }
+            return constructorv.newInstance(objs);
+
+        }
+
+        throw new NoSuchMethodException();
     }
 
     public Object invoke(Object obj, String name, Object... Argz) throws NoSuchMethodException, SecurityException,
@@ -66,9 +93,9 @@ public abstract class Install {
 
         for (Method method : methodz) {
             if (method.getName() == name) {
-                Object[] objs = new Object[method.getParameterTypes().length ];
-                for (int g66 = 0; g66<method.getParameterTypes().length;g66++) {
-                    objs[g66]=g66<Argz.length?Argz[g66]:null;
+                Object[] objs = new Object[method.getParameterTypes().length];
+                for (int g66 = 0; g66 < method.getParameterTypes().length; g66++) {
+                    objs[g66] = g66 < Argz.length ? Argz[g66] : null;
                 }
                 return method.invoke(object, objs);
             }
@@ -83,7 +110,7 @@ public abstract class Install {
         throw new NoSuchMethodException();
     }
 
-    public Install(File jar, File dotMC) throws MalformedURLException {
+    public Common(File jar, File dotMC) throws MalformedURLException {
         System.out.println("[core]: Using jar: " + jar.getAbsolutePath());
         System.out.println("[core]: Using .minecraft: " + dotMC.getAbsolutePath());
         child = new URLClassLoader(new URL[] { jar.toURI().toURL() }, this.getClass().getClassLoader());
