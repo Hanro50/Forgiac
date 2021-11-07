@@ -111,8 +111,9 @@ public abstract class Common {
     }
 
     public Common(File jar, File dotMC) throws MalformedURLException {
-        System.out.println("[core]: Using jar: " + jar.getAbsolutePath());
-        System.out.println("[core]: Using .minecraft: " + dotMC.getAbsolutePath());
+        System.out.println("[core]: Using jar: " +jar.toURI().toURL() );
+        System.out.println("[core]: Using .minecraft: " + dotMC.toURI().toURL());
+   
         child = new URLClassLoader(new URL[] { jar.toURI().toURL() }, this.getClass().getClassLoader());
         File launcherProfiles = new File(dotMC, "launcher_profiles.json");
         if (!launcherProfiles.exists()) {

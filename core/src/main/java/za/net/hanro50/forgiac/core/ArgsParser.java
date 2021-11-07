@@ -27,12 +27,12 @@ public class ArgsParser {
    public ArgsParser(String[] args) {
       List<String> lst = new ArrayList<>();
       for (String arg : args) {
-         lst.add(arg.toLowerCase());
+         lst.add(arg);
       }
 
       for (int i = 0; i<lst.size();i++){
          if (lst.get(i).startsWith("--")){
-            ArgObj arg = parsedArgz.get(lst.get(i));
+            ArgObj arg = parsedArgz.get(lst.get(i).toLowerCase());
             if (arg == null) continue;
             i++;
             int k = i+arg.argCount;
