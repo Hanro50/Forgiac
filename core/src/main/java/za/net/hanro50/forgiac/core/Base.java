@@ -20,20 +20,20 @@ public class Base {
     };
 
     static {
-        ArgsParser.Register("mk_manifest", new ArgObj("Creates a manifest file in a given directory", 1, (argz) -> {
+        ArgsParser.Register("mk_manifest", new ArgObj("Creates a manifest file in a given directory", new String[]{"Folder"}, (argz) -> {
             Manifest = new File(argz[0]);
         }));
-        ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", 1, (argz) -> {
+        ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", new String[0], (argz) -> {
             noGui = true;
         }));
         ArgsParser.Register(".minecraft",
-                new ArgObj("The path towards the location of a .minecraft directory", 1, (argz) -> {
+                new ArgObj("The path towards the location of a .minecraft directory", new String[]{"Folder"}, (argz) -> {
                     dotMC = new File(argz[0]);
                 }));// lock = lst.indexOf("--lock") < 0;
-        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", 0, (argz) -> {
+        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
             lock = true;
         }));
-        ArgsParser.Register("version", new ArgObj("Shows build information", 0, (argz) -> {
+        ArgsParser.Register("version", new ArgObj("Shows build information", new String[0], (argz) -> {
             try {
                 InputStream propIs = Base.class.getResourceAsStream("/META-INF/build.txt");
                 Scanner s = new Scanner(propIs);
@@ -49,14 +49,14 @@ public class Base {
         }));
 
         ArgsParser.Register("installer",
-                new ArgObj("The path towards the location of a forge installer jar", 1, (argz) -> {
+                new ArgObj("The path towards the location of a forge installer jar", new String[]{"Folder"}, (argz) -> {
                     jar = new File(argz[0]);
                 }));
         ArgsParser.Register(".minecraft",
-                new ArgObj("The path towards the location of a .minecraft directory", 1, (argz) -> {
+                new ArgObj("The path towards the location of a .minecraft directory", new String[]{"Folder"}, (argz) -> {
                     dotMC = new File(argz[0]);
                 }));// lock = lst.indexOf("--lock") < 0;
-        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", 0, (argz) -> {
+        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
             lock = true;
         }));
     }
@@ -94,7 +94,7 @@ public class Base {
         return jar;
     }
 
-    public void setDotMC(File dotMC) {
+    public static void setDotMC(File dotMC) {
         if (lock)
             return;
         Base.dotMC = dotMC;

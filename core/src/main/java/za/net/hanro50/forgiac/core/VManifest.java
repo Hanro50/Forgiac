@@ -1,10 +1,6 @@
 package za.net.hanro50.forgiac.core;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 public class VManifest {
-    private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public String id;
     public String base;
@@ -17,6 +13,6 @@ public class VManifest {
 
     @Override
     public String toString() {
-        return gson.toJson(this);
+        return String.format("{\"id\": \"%s\",\"base\": \"%s\",\"type\": \"forge\"}", id, base);
     }
 }

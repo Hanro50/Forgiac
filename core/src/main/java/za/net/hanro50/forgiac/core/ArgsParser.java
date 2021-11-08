@@ -15,10 +15,23 @@ public class ArgsParser {
    }
 
    static {
-      Register("help", new ArgObj("Shows this dialogue", 0, (a) -> {
-         System.out.println("Help commands:");
+      Register("help", new ArgObj("Shows this dialogue", new String[0], (a) -> {
+         System.out.println("\u001b[1mHelp commands:\u001b[0m");
          parsedArgz.forEach((k, v) -> {
-            System.out.println("\t" + k + " : " + v.discription);
+            String argCN = "";
+            if (v.argCount > 0) {
+               argCN = "\u001b[31m\u001b[1m <" + String.join("> <", v.argNames) + ">";
+            }
+            System.out.format("%2s\u001b[32m%-76s\u001b[0m\n", "", k + argCN);
+            String disc = v.discription;
+
+            while (disc.length() > 70) {
+               int cutVal = disc.substring(0, 70).lastIndexOf(" ");
+               System.out.format("%-10s%-70s\n", "", disc.substring(0, cutVal));
+               disc= disc.substring(cutVal).trim();
+            }
+            System.out.format("%-10s%-70s\n", "", disc);
+            System.out.println("");
          });
          System.exit(0);
       }));
@@ -30,16 +43,17 @@ public class ArgsParser {
          lst.add(arg);
       }
 
-      for (int i = 0; i<lst.size();i++){
-         if (lst.get(i).startsWith("--")){
+      for (int i = 0; i < lst.size(); i++) {
+         if (lst.get(i).startsWith("--")) {
             ArgObj arg = parsedArgz.get(lst.get(i).toLowerCase());
-            if (arg == null) continue;
+            if (arg == null)
+               continue;
             i++;
-            int k = i+arg.argCount;
+            int k = i + arg.argCount;
             String[] parg = new String[arg.argCount];
             int f = 0;
-            for (;i<k &&i<lst.size();i++){
-               parg[f] = lst.get(i);
+            for (; i < k && i < lst.size(); i++) {
+               parg[f++] = lst.get(i);
             }
             arg.execute.accept(parg);
             --i;

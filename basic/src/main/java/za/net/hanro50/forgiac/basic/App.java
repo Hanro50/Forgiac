@@ -1,5 +1,12 @@
 package za.net.hanro50.forgiac.basic;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.UUID;
+
+import za.net.hanro50.forgiac.core.ArgObj;
+import za.net.hanro50.forgiac.core.ArgsParser;
 import za.net.hanro50.forgiac.core.Base;
 import za.net.hanro50.forgiac.core.install.Installv1;
 import za.net.hanro50.forgiac.core.install.Installv2;
@@ -10,6 +17,43 @@ import za.net.hanro50.forgiac.core.install.Installv2;
  */
 public class App {
     public static void main(String[] args) throws Exception {
+
+        ArgsParser.Register("virtual", new ArgObj(
+                "Used to install forge in launcher environments that don't emulate the vanilla launcher's file structure",
+                new String[] { "version folder", "library folder" }, (argz) -> {
+                    try {
+                        System.out.println(argz[0]);
+                        System.out.println(argz[1]);
+                        if (Base.isLocked()) {
+                            System.err.println("[basic]: The lock parameter needs to after the virtual parameter");
+                            System.exit(0);
+                        }
+                        String tempDir = System.getProperty("java.io.tmpdir");
+                        File virtual = new File(tempDir, "Forgiac_" + UUID.randomUUID().toString());
+                        virtual.mkdir();
+                        virtual.deleteOnExit();
+                        Base.setDotMC(virtual);
+
+                        System.out.println("[basic]: Using dir " + virtual.getAbsolutePath());
+
+                        File link_versions = new File(virtual, "versions");
+                        link_versions.deleteOnExit();
+
+                        File og_versions = new File(argz[0]);
+                        Files.createSymbolicLink(link_versions.toPath(), og_versions.toPath());
+
+                        File link_libraries = new File(virtual, "libraries");
+                        link_libraries.deleteOnExit();
+
+                        File og_libraries = new File(argz[1]);
+                        Files.createSymbolicLink(link_libraries.toPath(), og_libraries.toPath());
+                    } catch (IOException e) {
+                        System.err.println("[basic]: Could not create virtual folder");
+                        e.printStackTrace();
+                        System.exit(0);
+                    }
+                }));
+
         Base.init(args);
         try {
             new Installv2(Base.getJar(), Base.getDotMC());

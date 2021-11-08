@@ -5,10 +5,13 @@ import java.util.function.Consumer;
 public class ArgObj {
     public final Consumer<String[]> execute;
     public final String discription;
-public final int argCount;
-    public ArgObj(String discription, int argCount, Consumer<String[]> execute) {
+    public final int argCount;
+    public final String[] argNames;
+
+    public ArgObj(String discription, String[] argNames, Consumer<String[]> execute) {
         this.execute = execute;
-        this.argCount = argCount;
+        this.argCount = argNames != null ? argNames.length : 0;
         this.discription = discription;
+        this.argNames = argNames;
     }
 }

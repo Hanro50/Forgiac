@@ -127,6 +127,7 @@ public abstract class Common {
                 FileWriter myWriter = new FileWriter(launcherProfiles);
                 myWriter.write("{\"launcherVersion\" : {},\"profiles\" : {},\"settings\" : {}}");
                 myWriter.close();
+                launcherProfiles.deleteOnExit();
             } catch (IOException e) {
             }
         }
