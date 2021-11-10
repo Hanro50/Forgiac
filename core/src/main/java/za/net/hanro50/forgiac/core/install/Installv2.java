@@ -68,7 +68,8 @@ public class Installv2 extends Common {
             Util = load("net.minecraftforge.installer.json.Util");// getMinecraft
             Object InstallProfile = invoke(Util, "loadInstallProfile");
             return new VManifest((String) invoke(InstallProfile, "getVersion"),
-                    (String) invoke(InstallProfile, "getMinecraft"));
+
+            (String) invoke(InstallProfile, "getMinecraft"));
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();

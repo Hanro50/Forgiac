@@ -2,11 +2,15 @@ package za.net.hanro50.forgiac.core;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -89,6 +93,24 @@ public class Base {
             System.exit(0);
         }));
 
+        ArgsParser.Register("log",
+                new ArgObj("Specifies the location of a log file", new String[] { "File" }, (argz) -> {
+
+                    try {
+                        File outPutFile = new File(argz[0], "log.txt");
+                        outPutFile.createNewFile();
+                        LogOut out = new LogOut(new PrintStream(new FileOutputStream(outPutFile, true), true),
+                                System.out);
+                        System.setOut(out.getPrintStream());
+                        System.out.println("[core]: New log file created on => "+ new Date().getTime());
+                        System.out.println("[core]: installer: " + outPutFile.getAbsolutePath());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }));
+
         ArgsParser.Register("installer", new ArgObj("The path towards the location of a forge installer jar",
                 new String[] { "Folder" }, (argz) -> {
                     jar = new File(argz[0]);
@@ -103,6 +125,7 @@ public class Base {
     }
 
     public static void init(String[] args) {
+
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (Exception ex) {

@@ -3,7 +3,6 @@ package za.net.hanro50.forgiac.basic;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.UUID;
 
 import za.net.hanro50.forgiac.core.ArgObj;
 import za.net.hanro50.forgiac.core.ArgsParser;
@@ -16,6 +15,23 @@ import za.net.hanro50.forgiac.core.install.Installv2;
  *
  */
 public class App {
+    /**
+     * @param directoryToBeDeleted
+     * @return
+     * @see https://www.baeldung.com/java-delete-directory
+     */
+    public static boolean deleteDirectory(File directoryToBeDeleted) {
+        if (!Files.isSymbolicLink(directoryToBeDeleted.toPath())) {
+            File[] allContents = directoryToBeDeleted.listFiles();
+            if (allContents != null) {
+                for (File file : allContents) {
+                    deleteDirectory(file);
+                }
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
+
     public static void main(String[] args) throws Exception {
 
         ArgsParser.Register("virtual", new ArgObj(
@@ -28,8 +44,13 @@ public class App {
                             System.err.println("[basic]: The lock parameter needs to after the virtual parameter");
                             System.exit(0);
                         }
-                        String tempDir = System.getProperty("java.io.tmpdir");
-                        File virtual = new File(tempDir, "Forgiac_" + UUID.randomUUID().toString());
+
+                        File virtual = new File(System.getProperty("user.dir"), ".temp");
+                        System.setProperty("user.dir", virtual.getAbsolutePath());
+                        System.out.println(System.getProperty("user.dir"));
+                        if (virtual.exists()) {
+                            deleteDirectory(virtual);
+                        }
                         virtual.mkdir();
                         virtual.deleteOnExit();
                         Base.setDotMC(virtual);

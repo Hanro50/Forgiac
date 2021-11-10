@@ -6,7 +6,7 @@
   <version>${revision}</version>
   <name>forgiac</name>
   <properties>
-    <revision>1.0.3-SNAPSHOT</revision>
+    <revision>1.0.4-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
