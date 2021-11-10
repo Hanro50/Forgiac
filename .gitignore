@@ -34,3 +34,5 @@ hs_err_pid*
 /gui/dependency-reduced-pom.xml
 
 /natives
+
+log.txt
