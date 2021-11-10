@@ -1,6 +1,5 @@
 package za.net.hanro50.forgiac.core;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
