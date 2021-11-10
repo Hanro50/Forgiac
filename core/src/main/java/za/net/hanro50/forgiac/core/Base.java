@@ -1,9 +1,13 @@
 package za.net.hanro50.forgiac.core;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
-
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -20,14 +24,51 @@ public class Base {
     };
 
     static {
-        ArgsParser.Register("mk_manifest", new ArgObj("Creates a manifest file in a given directory", new String[]{"Folder"}, (argz) -> {
-            Manifest = new File(argz[0]);
-        }));
+        ArgsParser.Register("mk_release", new ArgObj(
+                "Creates help files that allows you to release this in a repository", new String[0], (argz) -> {
+                    String basePath = Base.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+                    File file = new File(basePath);
+                    File sha1File = new File(basePath + ".sha1");
+                    MessageDigest digest;
+                    try {
+                        digest = MessageDigest.getInstance("SHA-1");
+                        InputStream fis = new FileInputStream(file);
+
+                        int n = 0;
+                        byte[] buffer = new byte[8192];
+                        while (n != -1) {
+                            n = fis.read(buffer);
+                            if (n > 0) {
+                                digest.update(buffer, 0, n);
+                            }
+                        }
+                        fis.close();
+
+                        if (sha1File.exists())
+                            sha1File.delete();
+                        sha1File.createNewFile();
+                        FileWriter myWriter = new FileWriter(sha1File);
+                        String out = "";
+                        for (Byte bit : digest.digest()) {
+                            String parsep = Integer.toHexString(bit & 0xFF);
+                            out += (parsep.length() < 2 ? "0" + parsep : parsep.substring(0, 2));
+                        }
+                        myWriter.write(out);
+                        myWriter.close();
+                    } catch (NoSuchAlgorithmException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.exit(0);
+                }));// lock = lst.indexOf("--lock") < 0;
+        ArgsParser.Register("mk_manifest",
+                new ArgObj("Creates a manifest file in a given directory", new String[] { "Folder" }, (argz) -> {
+                    Manifest = new File(argz[0]);
+                }));
         ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", new String[0], (argz) -> {
             noGui = true;
         }));
-        ArgsParser.Register(".minecraft",
-                new ArgObj("The path towards the location of a .minecraft directory", new String[]{"Folder"}, (argz) -> {
+        ArgsParser.Register(".minecraft", new ArgObj("The path towards the location of a .minecraft directory",
+                new String[] { "Folder" }, (argz) -> {
                     dotMC = new File(argz[0]);
                 }));// lock = lst.indexOf("--lock") < 0;
         ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
@@ -48,12 +89,12 @@ public class Base {
             System.exit(0);
         }));
 
-        ArgsParser.Register("installer",
-                new ArgObj("The path towards the location of a forge installer jar", new String[]{"Folder"}, (argz) -> {
+        ArgsParser.Register("installer", new ArgObj("The path towards the location of a forge installer jar",
+                new String[] { "Folder" }, (argz) -> {
                     jar = new File(argz[0]);
                 }));
-        ArgsParser.Register(".minecraft",
-                new ArgObj("The path towards the location of a .minecraft directory", new String[]{"Folder"}, (argz) -> {
+        ArgsParser.Register(".minecraft", new ArgObj("The path towards the location of a .minecraft directory",
+                new String[] { "Folder" }, (argz) -> {
                     dotMC = new File(argz[0]);
                 }));// lock = lst.indexOf("--lock") < 0;
         ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
