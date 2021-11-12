@@ -1,4 +1,4 @@
-package za.net.hanro50.forgiac.core;
+package za.net.hanro50.forgiac.core.misc;
 
 import java.util.function.Consumer;
 

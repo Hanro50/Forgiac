@@ -2,35 +2,19 @@ package za.net.hanro50.forgiac.basic;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
-import za.net.hanro50.forgiac.core.ArgObj;
 import za.net.hanro50.forgiac.core.ArgsParser;
 import za.net.hanro50.forgiac.core.Base;
 import za.net.hanro50.forgiac.core.install.Installv1;
 import za.net.hanro50.forgiac.core.install.Installv2;
+import za.net.hanro50.forgiac.core.misc.ArgObj;
 
 /**
  * Hello world!
  *
  */
 public class App {
-    /**
-     * @param directoryToBeDeleted
-     * @return
-     * @see https://www.baeldung.com/java-delete-directory
-     */
-    public static boolean deleteDirectory(File directoryToBeDeleted) {
-        if (!Files.isSymbolicLink(directoryToBeDeleted.toPath())) {
-            File[] allContents = directoryToBeDeleted.listFiles();
-            if (allContents != null) {
-                for (File file : allContents) {
-                    deleteDirectory(file);
-                }
-            }
-        }
-        return directoryToBeDeleted.delete();
-    }
+  
 
     public static void main(String[] args) throws Exception {
 
@@ -45,11 +29,11 @@ public class App {
                             System.exit(0);
                         }
 
-                        File virtual = new File(System.getProperty("user.dir"), ".temp");
+                        File virtual = new File( System.getProperty("java.io.tmpdir"), ".forgiac");
                         System.setProperty("user.dir", virtual.getAbsolutePath());
                         System.out.println(System.getProperty("user.dir"));
                         if (virtual.exists()) {
-                            deleteDirectory(virtual);
+                            Util.deleteDirectory(virtual);
                         }
                         virtual.mkdir();
                         virtual.deleteOnExit();
@@ -61,13 +45,13 @@ public class App {
                         link_versions.deleteOnExit();
 
                         File og_versions = new File(argz[0]);
-                        Files.createSymbolicLink(link_versions.toPath(), og_versions.toPath());
+                        Util.link(link_versions.toPath(), og_versions.toPath());
 
                         File link_libraries = new File(virtual, "libraries");
                         link_libraries.deleteOnExit();
 
                         File og_libraries = new File(argz[1]);
-                        Files.createSymbolicLink(link_libraries.toPath(), og_libraries.toPath());
+                        Util.link(link_libraries.toPath(), og_libraries.toPath());
                     } catch (IOException e) {
                         System.err.println("[basic]: Could not create virtual folder");
                         e.printStackTrace();

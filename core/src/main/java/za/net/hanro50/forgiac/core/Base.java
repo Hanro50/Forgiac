@@ -15,6 +15,9 @@ import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarkLaf;
 
+import za.net.hanro50.forgiac.core.misc.ArgObj;
+import za.net.hanro50.forgiac.core.misc.LogOut;
+
 public class Base {
     private static Boolean lock = false;
     private static File jar;

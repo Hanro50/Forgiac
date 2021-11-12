@@ -10,8 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import za.net.hanro50.forgiac.core.VManifest;
 import za.net.hanro50.forgiac.core.Base;
+import za.net.hanro50.forgiac.core.misc.VManifest;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class Common {

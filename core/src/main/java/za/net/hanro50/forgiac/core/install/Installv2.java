@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import javax.swing.JFrame;
 
 import za.net.hanro50.forgiac.core.Base;
-import za.net.hanro50.forgiac.core.VManifest;
+import za.net.hanro50.forgiac.core.misc.VManifest;
 
 @SuppressWarnings({ "rawtypes" })
 public class Installv2 extends Common {

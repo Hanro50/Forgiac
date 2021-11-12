@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import za.net.hanro50.forgiac.core.misc.ArgObj;
+
 public class ArgsParser {
 
    private final static Map<String, ArgObj> parsedArgz = new HashMap<>();
