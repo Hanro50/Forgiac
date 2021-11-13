@@ -19,7 +19,7 @@ public class ArgsParser {
    static {
 
       Register("html", new ArgObj("Like the help command, but prints in html", new String[0], (a) -> {
-         System.out.println("<h3>Help commands:</h3>\n<table>\n\t<tr>\n\t\t<th>Command</th>\n\t\t<th>Parameters</th>\n\t\t<th>Discription</th>");
+         System.out.println("<h3>Help commands:</h3>\n<table>\n\t<tr>\n\t\t<th>Command</th>\n\t\t<th>Parameters</th>\n\t\t<th>Discription</th>\n\t</tr>");
          parsedArgz.forEach((k, v) -> {
             String argCN = "";
             if (v.argCount > 0) {

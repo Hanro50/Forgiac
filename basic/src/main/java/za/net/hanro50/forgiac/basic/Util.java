@@ -29,13 +29,14 @@ public class Util {
 
     public static void link(Path link, Path target) throws IOException {
         try {
-            System.out.println();
+            System.out.println(link.getFileSystem().supportedFileAttributeViews());
+
             if (OS.indexOf("win") >= 0) {
                 if (Float.parseFloat(System.getProperty("os.version")) < 6f) {
                     JOptionPane.showMessageDialog(null,
-                            "This lib requires that mklink.exe to be in System32.\nPlease use Windows Vista or newer if you're still on XP or older\n",
+                            "This lib requires that mklink.\nPlease use Windows Vista or newer\n",
                             "Dialog", JOptionPane.ERROR_MESSAGE);
-                    System.exit(1);
+                    System.exit(-1000);
                 }
                 link.toFile().delete();
                 Runtime.getRuntime().exec(new String[] { "C:\\WINDOWS\\SYSTEM32\\CMD.EXE","/c","mklink", "/j", link.toString(), target.toString() });

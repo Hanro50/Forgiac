@@ -14,6 +14,7 @@
                 <th>Command</th>
                 <th>Parameters</th>
                 <th>Discription</th>
+        </tr>
         <tr>
                 <td><nobr>--mk_manifest</nobr></td>
                 <td>Folder</td>
@@ -69,4 +70,25 @@
                 <td>Folder</td>
                 <td>The path towards the location of a forge installer jar</td>
         </tr>
+</table>
+
+## Exit codes 
+<table>
+</table>
+    <tr>
+        <th>code</th>
+        <th>Discription</th>
+    </tr>
+    <tr>
+        <td>-1000</td>
+        <td>Compatibility issue, will only pop up on Windows XP and earlier when using the --virtual parameter.</td>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Forge was installed without issue</td>
+    </tr>
+    <tr>
+        <td>100</td>
+        <td>User cancelled request</td>
+    </tr>
 </table>

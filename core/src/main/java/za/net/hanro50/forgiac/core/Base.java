@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarkLaf;
 
@@ -104,7 +105,7 @@ public class Base {
                         LogOut out = new LogOut(new PrintStream(new FileOutputStream(outPutFile, true), true),
                                 System.out);
                         System.setOut(out.getPrintStream());
-                        System.out.println("[core]: New log file created on => "+ new Date().getTime());
+                        System.out.println("[core]: New log file created on => " + new Date().getTime());
                         System.out.println("[core]: installer: " + outPutFile.getAbsolutePath());
 
                     } catch (IOException e) {
@@ -149,6 +150,7 @@ public class Base {
         mc.setDialogTitle("Select forge Installation jar");
         mc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         mc.showOpenDialog(null);
+        chk(mc);
         System.out.println("[core]: installer: " + mc.getSelectedFile().getAbsolutePath());
 
         jar = mc.getSelectedFile();
@@ -173,6 +175,7 @@ public class Base {
         dotMC.setDialogTitle("Set location of .Minecraft folder location");
         dotMC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dotMC.showOpenDialog(null);
+        chk(dotMC);
         System.out.println("[core]: .minecraft: " + dotMC.getSelectedFile().getAbsolutePath());
         Base.dotMC = dotMC.getSelectedFile();
     }
@@ -185,6 +188,15 @@ public class Base {
 
     public static File getManifestFolder() {
         return Manifest;
+    }
+
+    private static void chk(JFileChooser fj) {
+        if (fj.getSelectedFile() == null) {
+            if (!noGui)
+                JOptionPane.showMessageDialog(null, "Cannot continue due to user canceling request", "Exit code 100",
+                        JOptionPane.ERROR_MESSAGE);
+            System.exit(100);
+        }
     }
 
 }
