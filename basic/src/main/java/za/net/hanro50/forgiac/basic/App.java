@@ -22,13 +22,7 @@ import za.net.hanro50.forgiac.core.misc.ArgObj;
  *
  */
 public class App {
-
-    public static void main(String[] args) throws Exception {
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception ex) {
-            System.err.println("Failed to initialize LaF");
-        }
+    static {
         ArgsParser.Register("virtual", new ArgObj(
                 "Used to install forge in launcher environments that don't emulate the vanilla launcher's file structure",
                 new String[] { "version folder", "library folder" }, (argz) -> {
@@ -68,12 +62,19 @@ public class App {
                         ExitCodes.exit(100);
                     }
                 }));
+    }
+
+    public static void main(String[] args) throws Exception {
+        Base.standalone = true;
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+
         JFrame self = new JFrame("Forgiac");
         try {
-            // URL iconURL = Base.class.getResource("/za/net/hanro50/forgiac/favicon.png");
-            // ImageIcon icon = new ImageIcon(iconURL);
-            // Image img = icon.getImage();
-            Image img = ImageIO.read(Base.class.getResourceAsStream("/za/net/hanro50/forgiac/favicon.png"));
+            Image img = ImageIO.read(Base.class.getResourceAsStream("/za/net/hanro50/forgiac/resources/favicon.png"));
             img = img.getScaledInstance(1024, 1024, Image.SCALE_REPLICATE);
             self.setIconImage(img);
         } catch (Exception e) {
@@ -81,7 +82,7 @@ public class App {
         }
 
         Base.init(args, self);
-        Base.standalone = true;
+
         try {
             new Installv2(Base.getJar(), Base.getDotMC());
         } catch (Exception e) {

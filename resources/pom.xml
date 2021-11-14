@@ -13,21 +13,9 @@
   <build>
     <resources>
       <resource>
-        <directory>resources</directory>
-        <includes>
-          <include>favicon.png</include>
-        </includes>
-        <targetPath>za/net/hanro50/forgiac</targetPath>
-      </resource>
-      <resource>
-        <directory>resources</directory>
+        <directory>jar</directory>
         <filtering>true</filtering>
-        <includes>
-          <include>build.txt</include>
-          <include>README.md</include>
-          <include>LICENSE</include>
-        </includes>
-        <targetPath>META-INF</targetPath>
+        <targetPath>za/net/hanro50/forgiac/resources</targetPath>
       </resource>
     </resources>
   </build>

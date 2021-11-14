@@ -30,6 +30,21 @@ public class Base {
         return lock;
     };
 
+    public static void readFile(String path, String err) {
+        try {
+            InputStream propIs = Base.class.getResourceAsStream(path);
+            Scanner s = new Scanner(propIs);
+            while (s.hasNextLine()) {
+                System.out.println(s.nextLine());
+            }
+            s.close();
+        } catch (Throwable t) {
+            System.out.println(err);
+            t.printStackTrace();
+        }
+        ExitCodes.exit(0);
+    }
+
     static {
         ArgsParser.Register("mk_release", new ArgObj(
                 "Creates help files that allows you to release this in a repository", new String[0], (argz) -> {
@@ -65,40 +80,19 @@ public class Base {
                     } catch (NoSuchAlgorithmException | IOException e) {
                         e.printStackTrace();
                     }
-                    System.exit(0);
+                    ExitCodes.exit(0);
                 }));// lock = lst.indexOf("--lock") < 0;
         ArgsParser.Register("mk_manifest",
                 new ArgObj("Creates a manifest file in a given directory", new String[] { "Folder" }, (argz) -> {
                     Manifest = new File(argz[0]);
                 }));
+
         ArgsParser.Register("no_gui", new ArgObj("Disables some of the gui elements", new String[0], (argz) -> {
             noGui = true;
-        }));
-        ArgsParser.Register(".minecraft", new ArgObj("The path towards the location of a .minecraft directory",
-                new String[] { "Folder" }, (argz) -> {
-                    dotMC = new File(argz[0]);
-                }));// lock = lst.indexOf("--lock") < 0;
-        ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
-            lock = true;
-        }));
-        ArgsParser.Register("version", new ArgObj("Shows build information", new String[0], (argz) -> {
-            try {
-                InputStream propIs = Base.class.getResourceAsStream("/META-INF/build.txt");
-                Scanner s = new Scanner(propIs);
-                while (s.hasNextLine()) {
-                    System.out.println(s.nextLine());
-                }
-                s.close();
-            } catch (Throwable t) {
-                System.out.println("Could not read build file");
-                t.printStackTrace();
-            }
-            ExitCodes.exit(0);
         }));
 
         ArgsParser.Register("log",
                 new ArgObj("Specifies the location of a log file", new String[] { "File" }, (argz) -> {
-
                     try {
                         File outPutFile = new File(argz[0], "log.txt");
                         outPutFile.createNewFile();
@@ -125,6 +119,13 @@ public class Base {
         ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
             lock = true;
         }));
+
+        ArgsParser.Register("version", new ArgObj("Shows build information", new String[0], (argz) -> {
+            readFile("/za/net/hanro50/forgiac/resources/build.txt", "Could not read build file");
+        }));
+        ArgsParser.Register("licence", new ArgObj("Shows licence information", new String[0], (argz) -> {
+            readFile("/za/net/hanro50/forgiac/resources/LICENSE", "Could not read Licence file");
+        }));
     }
 
     public static void init(String[] args, JFrame self) {
@@ -132,7 +133,7 @@ public class Base {
         if (!noGui)
             self.setVisible(true);
         ExitCodes.Init();
-       
+
         self.setLocationRelativeTo(null);
         new ArgsParser(args);
     }
