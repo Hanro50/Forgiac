@@ -1,9 +1,6 @@
 # Forgiac
  A reflection based forge wrapper. 
 
-# WIP: Planned features
-1) Virtual install environment support
-
 ## Compatibility: 
 1.5.2-7.8.0.684+ (Tested so far) 
 
