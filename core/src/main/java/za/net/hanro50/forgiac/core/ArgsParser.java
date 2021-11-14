@@ -28,7 +28,7 @@ public class ArgsParser {
             System.out.format("\t<tr>\n\t\t<td><nobr>%s</nobr></td>\n\t\t<td>%s</td>\n\t\t<td>%s</td>\n\t</tr>\n", k, argCN,v.discription);
          });
          System.out.println("</table>");
-         System.exit(0);
+         ExitCodes.exit(0);
       }));
       Register("help", new ArgObj("Shows this dialogue", new String[0], (a) -> {
          System.out.println("\u001b[1mHelp commands:\u001b[0m");
@@ -48,7 +48,7 @@ public class ArgsParser {
             System.out.format("%-10s%-70s\n", "", disc);
             System.out.println("");
          });
-         System.exit(0);
+         ExitCodes.exit(0);
       }));
    }
 

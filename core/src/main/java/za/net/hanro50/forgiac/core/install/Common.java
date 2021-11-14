@@ -142,7 +142,7 @@ public abstract class Common {
                 myWriter.close();
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

@@ -38,6 +38,7 @@ public class ExitCodes {
             JOptionPane.showMessageDialog(null, codes.getOrDefault(code, "Unknown error"), "Exit code " + code,
                     JOptionPane.ERROR_MESSAGE);
         }
-        System.exit(code);
+        if (Base.standalone)
+            System.exit(code);
     }
 }

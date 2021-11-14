@@ -59,7 +59,7 @@ public class App {
                 }));
 
         Base.init(args);
-
+        Base.standalone = true;
         try {
             new Installv2(Base.getJar(), Base.getDotMC());
         } catch (Exception e) {
@@ -71,6 +71,6 @@ public class App {
             }
         }
         System.out.println("Bye World!");
-        System.exit(0);
+        ExitCodes.exit(0);
     }
 }

@@ -24,6 +24,7 @@ public class Base {
     private static File jar;
     private static File dotMC;
     public static Boolean noGui = false;
+    public static Boolean standalone = false;
     private static File Manifest;
 
     public static Boolean isLocked() {
@@ -93,7 +94,7 @@ public class Base {
                 System.out.println("Could not read build file");
                 t.printStackTrace();
             }
-            System.exit(0);
+            ExitCodes.exit(0);
         }));
 
         ArgsParser.Register("log",

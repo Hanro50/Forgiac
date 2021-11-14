@@ -4,8 +4,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
-import javax.swing.JOptionPane;
-
 import za.net.hanro50.forgiac.core.Base;
 import za.net.hanro50.forgiac.core.ExitCodes;
 import za.net.hanro50.forgiac.core.misc.VManifest;
