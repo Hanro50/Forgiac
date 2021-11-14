@@ -2,7 +2,7 @@
  A reflection based forge wrapper. 
 
 ## Jar guide
-basic => An executable jar meant to interface with other languages 
+basic => An executable jar meant to interface with other languages <br/>
 core => The core of forgiac for use with Java launchers 
 
 ## Compatibility: 
