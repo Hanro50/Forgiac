@@ -38,6 +38,13 @@
       </resource>
       <resource>
         <directory>../</directory>
+        <includes>
+          <include>favicon.png</include>
+        </includes>
+        <targetPath>za/net/hanro50/forgiac</targetPath>
+      </resource>
+      <resource>
+        <directory>../</directory>
         <filtering>true</filtering>
         <includes>
           <include>build.txt</include>

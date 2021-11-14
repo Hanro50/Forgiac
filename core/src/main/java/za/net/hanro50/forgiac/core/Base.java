@@ -1,5 +1,6 @@
 package za.net.hanro50.forgiac.core;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,8 +12,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
+
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import za.net.hanro50.forgiac.core.misc.ArgObj;
@@ -25,6 +30,7 @@ public class Base {
     public static Boolean noGui = false;
     public static Boolean standalone = false;
     private static File Manifest;
+    public static JFrame self;
 
     public static Boolean isLocked() {
         return lock;
@@ -128,12 +134,31 @@ public class Base {
     }
 
     public static void init(String[] args) {
-ExitCodes.Init();
+        JFrame self = new JFrame("Forgiac");
+        try {
+            // URL iconURL = Base.class.getResource("/za/net/hanro50/forgiac/favicon.png");
+            // ImageIcon icon = new ImageIcon(iconURL);
+            // Image img = icon.getImage();
+            Image img = ImageIO.read(Base.class.getResourceAsStream("/za/net/hanro50/forgiac/favicon.png"));
+            img = img.getScaledInstance(1024, 1024, Image.SCALE_REPLICATE);
+            self.setIconImage(img);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        init(args, self);
+    }
+
+    public static void init(String[] args, JFrame self) {
+        Base.self = self;
+        if (!noGui)
+            self.setVisible(true);
+        ExitCodes.Init();
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
+        self.setLocationRelativeTo(null);
         new ArgsParser(args);
     }
 
@@ -149,7 +174,7 @@ ExitCodes.Init();
         JFileChooser mc = new JFileChooser();
         mc.setDialogTitle("Select forge Installation jar");
         mc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        mc.showOpenDialog(null);
+        mc.showOpenDialog(self);
         chk(mc);
         System.out.println("[core]: installer: " + mc.getSelectedFile().getAbsolutePath());
 
@@ -174,7 +199,7 @@ ExitCodes.Init();
         JFileChooser dotMC = new JFileChooser();
         dotMC.setDialogTitle("Set location of .Minecraft folder location");
         dotMC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        dotMC.showOpenDialog(null);
+        dotMC.showOpenDialog(self);
         chk(dotMC);
         System.out.println("[core]: .minecraft: " + dotMC.getSelectedFile().getAbsolutePath());
         Base.dotMC = dotMC.getSelectedFile();

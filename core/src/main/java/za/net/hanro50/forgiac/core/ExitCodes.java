@@ -9,8 +9,11 @@ import za.net.hanro50.forgiac.core.misc.ArgObj;
 
 public class ExitCodes {
     final static Map<Integer, String> codes = new HashMap<>();
-
+static boolean error = false;
     public static void Init() {
+        ArgsParser.Register("error_on", new ArgObj("Shows error messages on non zero exits", new String[0], (args) -> {
+            error=true;
+        }));
         ArgsParser.Register("err", new ArgObj("Show the possible error codes", new String[0], (args) -> {
             System.out.println("<table>");
             System.out.println("<tr><th>Codes</td><td>message</td></tr>");
@@ -18,7 +21,7 @@ public class ExitCodes {
                 System.out.println("<tr><td>" + key + "</td><td>" + val + "</td></tr>");
             });
             System.out.println("</table>");
-            System.exit(0);
+            ExitCodes.exit(0);
         }));
         codes.put(0, "Done!");
         codes.put(100, "Could not create virtual folder");
@@ -34,8 +37,8 @@ public class ExitCodes {
     }
 
     public static void exit(int code) {
-        if (code != 0 && !Base.noGui) {
-            JOptionPane.showMessageDialog(null, codes.getOrDefault(code, "Unknown error"), "Exit code " + code,
+        if (code != 0 && !Base.noGui && error) {
+            JOptionPane.showMessageDialog(Base.self, codes.getOrDefault(code, "Unknown error"), "Exit code " + code,
                     JOptionPane.ERROR_MESSAGE);
         }
         if (Base.standalone)
