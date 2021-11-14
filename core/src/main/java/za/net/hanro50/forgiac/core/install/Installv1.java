@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javax.swing.JOptionPane;
 
 import za.net.hanro50.forgiac.core.Base;
+import za.net.hanro50.forgiac.core.ExitCodes;
 import za.net.hanro50.forgiac.core.misc.VManifest;
 
 @SuppressWarnings({ "rawtypes" })
@@ -45,8 +46,7 @@ public class Installv1 extends Common {
         }
 
         if (!suc)
-            JOptionPane.showMessageDialog(null, "Forge's installer reports that the installation failed!",
-                    "Forgiac error", JOptionPane.ERROR_MESSAGE);
+            ExitCodes.exit(202);
     }
 
     @Override

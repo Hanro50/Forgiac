@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import za.net.hanro50.forgiac.core.ArgsParser;
 import za.net.hanro50.forgiac.core.Base;
+import za.net.hanro50.forgiac.core.ExitCodes;
 import za.net.hanro50.forgiac.core.install.Installv1;
 import za.net.hanro50.forgiac.core.install.Installv2;
 import za.net.hanro50.forgiac.core.misc.ArgObj;
@@ -14,7 +15,6 @@ import za.net.hanro50.forgiac.core.misc.ArgObj;
  *
  */
 public class App {
-  
 
     public static void main(String[] args) throws Exception {
 
@@ -26,10 +26,10 @@ public class App {
                         System.out.println(argz[1]);
                         if (Base.isLocked()) {
                             System.err.println("[basic]: The lock parameter needs to after the virtual parameter");
-                            System.exit(0);
+                            ExitCodes.exit(300);
                         }
 
-                        File virtual = new File( System.getProperty("java.io.tmpdir"), ".forgiac");
+                        File virtual = new File(System.getProperty("java.io.tmpdir"), ".forgiac");
                         System.setProperty("user.dir", virtual.getAbsolutePath());
                         System.out.println(System.getProperty("user.dir"));
                         if (virtual.exists()) {
@@ -53,18 +53,22 @@ public class App {
                         File og_libraries = new File(argz[1]);
                         Util.link(link_libraries.toPath(), og_libraries.toPath());
                     } catch (IOException e) {
-                        System.err.println("[basic]: Could not create virtual folder");
                         e.printStackTrace();
-                        System.exit(0);
+                        ExitCodes.exit(100);
                     }
                 }));
 
         Base.init(args);
+
         try {
             new Installv2(Base.getJar(), Base.getDotMC());
         } catch (Exception e) {
             e.printStackTrace();
-            new Installv1(Base.getJar(), Base.getDotMC());
+            try {
+                new Installv1(Base.getJar(), Base.getDotMC());
+            } catch (Exception e1) {
+                ExitCodes.exit(201);
+            }
         }
         System.out.println("Bye World!");
         System.exit(0);

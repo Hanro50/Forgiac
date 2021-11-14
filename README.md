@@ -74,21 +74,13 @@
 
 ## Exit codes 
 <table>
-</table>
-    <tr>
-        <th>code</th>
-        <th>Discription</th>
-    </tr>
-    <tr>
-        <td>-1000</td>
-        <td>Compatibility issue, will only pop up on Windows XP and earlier when using the --virtual parameter.</td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Forge was installed without issue</td>
-    </tr>
-    <tr>
-        <td>100</td>
-        <td>User cancelled request</td>
-    </tr>
+<tr><th>Codes</td><td>message</td></tr>
+<tr><td>0</td><td>Done!</td></tr>
+<tr><td>100</td><td>Could not create virtual folder</td></tr>
+<tr><td>101</td><td>Could not create junction link</td></tr>
+<tr><td>102</td><td>Please use Windows Vista or later</td></tr>
+<tr><td>200</td><td>User cancelled request</td></tr>
+<tr><td>201</td><td>Invalid installation jar</td></tr>
+<tr><td>202</td><td>Forge failed to install</td></tr>
+<tr><td>300</td><td>Parameter error</td></tr>
 </table>

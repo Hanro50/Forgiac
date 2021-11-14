@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javax.swing.JFrame;
 
 import za.net.hanro50.forgiac.core.Base;
+import za.net.hanro50.forgiac.core.ExitCodes;
 import za.net.hanro50.forgiac.core.misc.VManifest;
 
 @SuppressWarnings({ "rawtypes" })
@@ -23,11 +24,14 @@ public class Installv2 extends Common {
         Object obj = construct(ClientInstall, InstallProfile, callback);
         File installer = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
         Predicate<String> optionals = a -> true;
+        boolean suc = false;
         try {
-            invoke(obj, "run", MCpath, optionals, installer);
+            suc = (boolean) invoke(obj, "run", MCpath, optionals, installer);
         } catch (ReflectiveOperationException e) {
-            invoke(obj, "run", MCpath, optionals);
+            suc = (boolean) invoke(obj, "run", MCpath, optionals);
         }
+if (!suc)
+        ExitCodes.exit(202);
     }
 
     public Installv2(File jar, File MCpath, Object callback) throws Exception {
@@ -43,8 +47,7 @@ public class Installv2 extends Common {
         if (!Base.noGui) {
             Class ProgressFrame = load("net.minecraftforge.installer.ProgressFrame");
             withOutputs = construct(ProgressFrame, withOutputs, "Forge installer", (Runnable) () -> {
-                System.out.println("Cancelled by user");
-                System.exit(0);
+                ExitCodes.exit(200);
             });
 
         }

@@ -128,7 +128,7 @@ public class Base {
     }
 
     public static void init(String[] args) {
-
+ExitCodes.Init();
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (Exception ex) {
@@ -192,10 +192,7 @@ public class Base {
 
     private static void chk(JFileChooser fj) {
         if (fj.getSelectedFile() == null) {
-            if (!noGui)
-                JOptionPane.showMessageDialog(null, "Cannot continue due to user canceling request", "Exit code 100",
-                        JOptionPane.ERROR_MESSAGE);
-            System.exit(100);
+            ExitCodes.exit(200);
         }
     }
 

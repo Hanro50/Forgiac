@@ -34,20 +34,22 @@ public class Util {
             if (OS.indexOf("win") >= 0) {
                 if (Float.parseFloat(System.getProperty("os.version")) < 6f) {
                     JOptionPane.showMessageDialog(null,
-                            "This lib requires that mklink.\nPlease use Windows Vista or newer\n",
-                            "Dialog", JOptionPane.ERROR_MESSAGE);
-                    System.exit(-1000);
+                            "This lib requires that mklink.\nPlease use Windows Vista or newer\n", "Dialog",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.exit(102);
                 }
                 link.toFile().delete();
-                Runtime.getRuntime().exec(new String[] { "C:\\WINDOWS\\SYSTEM32\\CMD.EXE","/c","mklink", "/j", link.toString(), target.toString() });
+                Runtime.getRuntime().exec(new String[] { "C:\\WINDOWS\\SYSTEM32\\CMD.EXE", "/c", "mklink", "/j",
+                        link.toString(), target.toString() });
+                if (!link.toFile().exists()) {
+                    System.exit(101);
+                }
             } else {
                 Files.createSymbolicLink(link, target);
             }
         } catch (RuntimeException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error creating links:\n" + e.getMessage(), "Dialog",
-                    JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            System.exit(100);
         }
 
     }
