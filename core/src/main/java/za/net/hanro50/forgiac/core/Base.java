@@ -1,6 +1,5 @@
 package za.net.hanro50.forgiac.core;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +12,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -131,21 +129,6 @@ public class Base {
         ArgsParser.Register("lock", new ArgObj("Locks in the given set of values", new String[0], (argz) -> {
             lock = true;
         }));
-    }
-
-    public static void init(String[] args) {
-        JFrame self = new JFrame("Forgiac");
-        try {
-            // URL iconURL = Base.class.getResource("/za/net/hanro50/forgiac/favicon.png");
-            // ImageIcon icon = new ImageIcon(iconURL);
-            // Image img = icon.getImage();
-            Image img = ImageIO.read(Base.class.getResourceAsStream("/za/net/hanro50/forgiac/favicon.png"));
-            img = img.getScaledInstance(1024, 1024, Image.SCALE_REPLICATE);
-            self.setIconImage(img);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        init(args, self);
     }
 
     public static void init(String[] args, JFrame self) {

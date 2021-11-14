@@ -2,6 +2,10 @@ package za.net.hanro50.forgiac.basic;
 
 import java.io.File;
 import java.io.IOException;
+import java.awt.Image;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 import za.net.hanro50.forgiac.core.ArgsParser;
 import za.net.hanro50.forgiac.core.Base;
@@ -57,8 +61,19 @@ public class App {
                         ExitCodes.exit(100);
                     }
                 }));
+        JFrame self = new JFrame("Forgiac");
+        try {
+            // URL iconURL = Base.class.getResource("/za/net/hanro50/forgiac/favicon.png");
+            // ImageIcon icon = new ImageIcon(iconURL);
+            // Image img = icon.getImage();
+            Image img = ImageIO.read(Base.class.getResourceAsStream("/za/net/hanro50/forgiac/favicon.png"));
+            img = img.getScaledInstance(1024, 1024, Image.SCALE_REPLICATE);
+            self.setIconImage(img);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Base.init(args);
+        Base.init(args, self);
         Base.standalone = true;
         try {
             new Installv2(Base.getJar(), Base.getDotMC());
