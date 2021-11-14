@@ -3,7 +3,7 @@
 
 ## Jar guide
 basic => An executable jar meant to interface with other languages <br/>
-core => The core of forgiac for use with Java launchers 
+core => The core of forgiac for use with Java launchers <br/>
 
 ## Compatibility: 
 1.5.2-7.8.0.684+ (Tested so far) 
