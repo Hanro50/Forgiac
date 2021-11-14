@@ -28,10 +28,12 @@ hs_err_pid*
 /core/target
 /basic/target
 /gui/target
+/resources/target
 
 /core/dependency-reduced-pom.xml
 /basic/dependency-reduced-pom.xml
 /gui/dependency-reduced-pom.xml
+/resources/dependency-reduced-pom.xml
 
 /natives
 

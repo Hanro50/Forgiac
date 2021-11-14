@@ -18,17 +18,10 @@
     <module>core</module>
     <module>basic</module>
   </modules>
-  <dependencies>
-    <dependency>
-      <groupId>com.formdev</groupId>
-      <artifactId>flatlaf</artifactId>
-      <version>1.6.1</version>
-    </dependency>
-  </dependencies>
   <build>
     <resources>
       <resource>
-        <directory>../</directory>
+        <directory>/resources</directory>
         <filtering>false</filtering>
         <includes>
           <include>LICENSE</include>
@@ -37,7 +30,14 @@
         <targetPath>META-INF</targetPath>
       </resource>
       <resource>
-        <directory>../</directory>
+        <directory>/resources</directory>
+        <includes>
+          <include>favicon.png</include>
+        </includes>
+        <targetPath>za/net/hanro50/forgiac</targetPath>
+      </resource>
+      <resource>
+        <directory>/resources</directory>
         <filtering>true</filtering>
         <includes>
           <include>build.txt</include>
@@ -45,23 +45,5 @@
         <targetPath>META-INF</targetPath>
       </resource>
     </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
-        <configuration>
-          <!-- put your configurations here -->
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 </project>

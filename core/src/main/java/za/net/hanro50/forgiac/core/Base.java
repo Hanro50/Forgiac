@@ -14,10 +14,6 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-
-import com.formdev.flatlaf.FlatDarkLaf;
-
 import za.net.hanro50.forgiac.core.misc.ArgObj;
 import za.net.hanro50.forgiac.core.misc.LogOut;
 
@@ -136,11 +132,7 @@ public class Base {
         if (!noGui)
             self.setVisible(true);
         ExitCodes.Init();
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception ex) {
-            System.err.println("Failed to initialize LaF");
-        }
+       
         self.setLocationRelativeTo(null);
         new ArgsParser(args);
     }

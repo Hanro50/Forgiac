@@ -6,6 +6,9 @@ import java.awt.Image;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import za.net.hanro50.forgiac.core.ArgsParser;
 import za.net.hanro50.forgiac.core.Base;
@@ -21,7 +24,11 @@ import za.net.hanro50.forgiac.core.misc.ArgObj;
 public class App {
 
     public static void main(String[] args) throws Exception {
-
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
         ArgsParser.Register("virtual", new ArgObj(
                 "Used to install forge in launcher environments that don't emulate the vanilla launcher's file structure",
                 new String[] { "version folder", "library folder" }, (argz) -> {
