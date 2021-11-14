@@ -6,7 +6,13 @@
     <groupId>za.net.hanro50.forgiac</groupId>
     <version>${revision}</version>
   </parent>
-
+<dependencies>
+  <dependency>
+    <artifactId>resources</artifactId>
+    <groupId>za.net.hanro50.forgiac.resources</groupId>
+    <version>${revision}</version>
+  </dependency>
+</dependencies>
   <groupId>za.net.hanro50.forgiac.core</groupId>
   <artifactId>core</artifactId>
   <version>${revision}</version>

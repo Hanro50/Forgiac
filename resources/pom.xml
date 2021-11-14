@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>forgiac</artifactId>
+    <groupId>za.net.hanro50.forgiac</groupId>
+    <version>${revision}</version>
+  </parent>
+  <groupId>za.net.hanro50.forgiac.resources</groupId>
+  <artifactId>resources</artifactId>
+  <version>${revision}</version>
+  <name>resources</name>
+  <build>
+    <resources>
+      <resource>
+        <directory>resources</directory>
+        <includes>
+          <include>favicon.png</include>
+        </includes>
+        <targetPath>za/net/hanro50/forgiac</targetPath>
+      </resource>
+      <resource>
+        <directory>resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>build.txt</include>
+          <include>README.md</include>
+          <include>LICENSE</include>
+        </includes>
+        <targetPath>META-INF</targetPath>
+      </resource>
+    </resources>
+  </build>
+</project>

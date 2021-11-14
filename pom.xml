@@ -6,7 +6,7 @@
   <version>${revision}</version>
   <name>forgiac</name>
   <properties>
-    <revision>1.6-SNAPSHOT</revision>
+    <revision>1.7-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -17,33 +17,6 @@
   <modules>
     <module>core</module>
     <module>basic</module>
+    <module>resources</module>
   </modules>
-  <build>
-    <resources>
-      <resource>
-        <directory>/resources</directory>
-        <filtering>false</filtering>
-        <includes>
-          <include>LICENSE</include>
-          <include>README.md</include>
-        </includes>
-        <targetPath>META-INF</targetPath>
-      </resource>
-      <resource>
-        <directory>/resources</directory>
-        <includes>
-          <include>favicon.png</include>
-        </includes>
-        <targetPath>za/net/hanro50/forgiac</targetPath>
-      </resource>
-      <resource>
-        <directory>/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>build.txt</include>
-        </includes>
-        <targetPath>META-INF</targetPath>
-      </resource>
-    </resources>
-  </build>
 </project>

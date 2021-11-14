@@ -1,6 +1,5 @@
 Build information
     project: ${project.parent.name}
-    module: ${project.name}
     version: ${revision}
     built on: ${timestamp}
     built by: ${user.name}
