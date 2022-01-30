@@ -2,6 +2,7 @@ package za.net.hanro50.forgiac.basic;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
@@ -34,14 +35,12 @@ public class App {
                             ExitCodes.exit(300);
                         }
 
-                        File virtual = new File(System.getProperty("java.io.tmpdir"), ".forgiac");
-                        System.setProperty("user.dir", virtual.getAbsolutePath());
-                        System.out.println(System.getProperty("user.dir"));
+                        File virtual = new File("virtual");
                         if (virtual.exists()) {
                             Util.deleteDirectory(virtual);
                         }
                         virtual.mkdir();
-                        virtual.deleteOnExit();
+                     //   virtual.deleteOnExit();
                         Base.setDotMC(virtual);
 
                         System.out.println("[basic]: Using dir " + virtual.getAbsolutePath());

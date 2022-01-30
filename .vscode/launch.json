@@ -9,7 +9,7 @@
             "type": "java",
             "name": "Basic",
             "request": "launch",
-            "mainClass": "za.net.hanro50.forgiac.basic",
+            "mainClass": "za.net.hanro50.forgiac.basic.App",
             "args": "--installer \"Hello world\""
         },
         {

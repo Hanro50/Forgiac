@@ -30,7 +30,10 @@ public class Util {
     public static void link(Path link, Path target) throws IOException {
         try {
             System.out.println(link.getFileSystem().supportedFileAttributeViews());
-
+            link.toFile().delete();
+            if (!target.toFile().exists()) {
+                target.toFile().mkdirs();
+            }
             if (OS.indexOf("win") >= 0) {
                 if (Float.parseFloat(System.getProperty("os.version")) < 6f) {
                     JOptionPane.showMessageDialog(null,
@@ -38,9 +41,15 @@ public class Util {
                             JOptionPane.ERROR_MESSAGE);
                     System.exit(102);
                 }
-                link.toFile().delete();
-                Runtime.getRuntime().exec(new String[] { "C:\\WINDOWS\\SYSTEM32\\CMD.EXE", "/c", "mklink", "/j",
-                        link.toString(), target.toString() });
+
+                try {
+                    Runtime.getRuntime().exec(new String[] { "C:\\WINDOWS\\SYSTEM32\\CMD.EXE", "/c", "mklink", "/j",
+                            "\"" + link.toString() + "\"", "\"" + target.toString() + "\"" }).waitFor();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                ;
                 if (!link.toFile().exists()) {
                     System.exit(101);
                 }
