@@ -6,14 +6,14 @@
     <groupId>za.net.hanro50.forgiac</groupId>
     <version>${revision}</version>
   </parent>
-  <groupId>za.net.hanro50.forgiac.basic</groupId>
+  <groupId>za.net.hanro50.forgiac</groupId>
   <artifactId>basic</artifactId>
   <version>${revision}</version>
   <name>basic</name>
   <dependencies>
     <dependency>
       <artifactId>core</artifactId>
-      <groupId>za.net.hanro50.forgiac.core</groupId>
+      <groupId>za.net.hanro50.forgiac</groupId>
       <version>${revision}</version>
     </dependency>
     <dependency>

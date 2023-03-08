@@ -2,7 +2,6 @@ package za.net.hanro50.forgiac.basic;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
