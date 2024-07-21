@@ -15,6 +15,7 @@ import za.net.hanro50.forgiac.core.Base;
 import za.net.hanro50.forgiac.core.ExitCodes;
 import za.net.hanro50.forgiac.core.install.Installv1;
 import za.net.hanro50.forgiac.core.install.Installv2;
+import za.net.hanro50.forgiac.core.install.Installv3;
 import za.net.hanro50.forgiac.core.misc.ArgObj;
 
 /**
@@ -39,7 +40,7 @@ public class App {
                             Util.deleteDirectory(virtual);
                         }
                         virtual.mkdir();
-                     //   virtual.deleteOnExit();
+                        // virtual.deleteOnExit();
                         Base.setDotMC(virtual);
 
                         System.out.println("[basic]: Using dir " + virtual.getAbsolutePath());
@@ -80,15 +81,24 @@ public class App {
         }
 
         Base.init(args, self);
-
         try {
-            new Installv2(Base.getJar(), Base.getDotMC());
-        } catch (Exception e) {
-            e.printStackTrace();
+            new Installv3(Base.getJar(), Base.getDotMC());
+        } catch (Exception e1) {
             try {
-                new Installv1(Base.getJar(), Base.getDotMC());
-            } catch (Exception e1) {
-                ExitCodes.exit(201);
+                new Installv2(Base.getJar(), Base.getDotMC());
+            } catch (Exception e2) {
+
+                try {
+                    new Installv1(Base.getJar(), Base.getDotMC());
+                } catch (Exception e3) {
+                    System.out.println("V3 failed");
+                    e1.printStackTrace();
+                    System.out.println("V2 failed");
+                    e2.printStackTrace();
+                    System.out.println("V1 failed");
+                    e3.printStackTrace();
+                    ExitCodes.exit(201);
+                }
             }
         }
         System.out.println("Bye World!");

@@ -96,9 +96,10 @@ public class Base {
                     try {
                         File outPutFile = new File(argz[0], "log.txt");
                         outPutFile.createNewFile();
-                        LogOut out = new LogOut(new PrintStream(new FileOutputStream(outPutFile, true), true),
-                                System.out);
-                        System.setOut(out.getPrintStream());
+                        try (LogOut out = new LogOut(new PrintStream(new FileOutputStream(outPutFile, true), true),
+                                System.out)) {
+                            System.setOut(out.getPrintStream());
+                        }
                         System.out.println("[core]: New log file created on => " + new Date().getTime());
                         System.out.println("[core]: installer: " + outPutFile.getAbsolutePath());
 

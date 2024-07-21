@@ -15,7 +15,7 @@ import za.net.hanro50.forgiac.core.misc.VManifest;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class Common {
-    URLClassLoader child;
+   protected URLClassLoader child;
 
     public abstract VManifest getManifest();
 
@@ -82,12 +82,24 @@ public abstract class Common {
             object = obj;
         }
         try {
+
             Method method = clazz.getDeclaredMethod(name, clasify(Argz));
             return method.invoke(object, Argz);
+        } catch (java.lang.NoSuchMethodException e) {
+            try {
+                System.out.println("Failed to get method in base class. Trying super class");
+                Method method = clazz.getSuperclass().getDeclaredMethod(name, clasify(Argz));
+                return method.invoke(object, Argz);
+            } catch (ReflectiveOperationException e2) {
+                e.printStackTrace();
+                e2.printStackTrace();
+                System.out.println("Cannot invoke default method of invocation. Going with plan B...huh...Plan F");
+            }
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
             System.out.println("Cannot invoke default method of invocation. Going with plan B...huh...Plan F");
         }
+
         Method[] methodz = clazz.getMethods();
         for (Method method : methodz) {
             System.out.println(method.getName() + ":" + method.getParameterTypes().length);
